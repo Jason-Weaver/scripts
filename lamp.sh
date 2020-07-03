@@ -3,6 +3,8 @@
 usage() {
 	echo "Creating a web server based on Linux, Apache (httpd), MySQL, and PHP"
 	echo "This was originally written to deploy Wordpress from a CentOS machine"
+	echo "Available options are --linx, --apache, --mysql, and --php to install"
+	echo "any of them. Running the script sans args will install all of them"
 }
 
 linuxInstall() {
@@ -23,6 +25,14 @@ apacheInstall() {
 	echo
 }
 
+mysqlInstall() {
+	echo "Installing MySQL..."
+	sudo yum install -y mysql-server
+	sudo systemctl enable --now mysqld.service
+	systemctl status mysqld
+	echo
+}
+
 # arg parser
 while [ $# -gt 0 ]
 do
@@ -35,6 +45,9 @@ do
 			;;
 		--apache | -a)
 			apacheInstall
+			;;
+		--mysql | -m)
+			mysqlInstall
 			;;
 		*)
 			echo "Unknown arg" && exit 1
