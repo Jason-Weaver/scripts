@@ -34,6 +34,19 @@ mysqlInstall() {
 	echo
 }
 
+phpInstall() {
+	echo "Installing PHP..."
+	sudo yum -y install php php-mysqlnd
+	if [[ $(sudo systemctl is-active httpd) == "active" ]]
+	then
+		sudo systemctl restart httpd
+		sudo systemctl status httpd
+	else
+		echo "httpd.service is uninstalled/inactive. Skipping service restart"
+	fi
+	echo
+}
+
 # arg parser
 while [ $# -gt 0 ]
 do
@@ -50,8 +63,11 @@ do
 		--mysql | -m)
 			mysqlInstall
 			;;
+		--php | -p)
+			phpInstall
+			;;
 		*)
-			echo "Unknown arg" && exit 1
+			echo "Unknown arg: $1" && exit 1
 			;;
 	esac
 	shift
