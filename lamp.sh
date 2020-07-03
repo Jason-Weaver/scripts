@@ -6,8 +6,17 @@ usage() {
 }
 
 linuxInstall() {
-	echo "Updating YUM Repo..."
+	echo "Updating your Linux RPM Repo..."
 	sudo yum -y update
+	echo
+}
+
+apacheInstall() {
+	echo "Installing and Enabling Apache..."
+	sudo yum install -y httpd
+	sudo systemctl enable --now httpd.service
+	systemctl status httpd
+	echo
 }
 
 # arg parser
@@ -19,6 +28,9 @@ do
 			;;
 		--linux | -l)
 			linuxInstall
+			;;
+		--apache | -a)
+			apacheInstall
 			;;
 		*)
 			echo "Unknown arg" && exit 1
