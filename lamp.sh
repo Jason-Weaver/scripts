@@ -26,8 +26,9 @@ apacheInstall() {
 }
 
 mysqlInstall() {
-	echo "Installing MySQL..."
+	echo "Installing and Enabling MySQL..."
 	sudo yum install -y mysql-server
+	sudo mysql_secure_installation
 	sudo systemctl enable --now mysqld.service
 	systemctl status mysqld
 	echo
