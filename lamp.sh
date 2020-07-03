@@ -6,8 +6,12 @@ usage() {
 }
 
 linuxInstall() {
-	echo "Updating your Linux RPM Repo..."
+	echo "Updating and Configuring Linux Machine..."
 	sudo yum -y update
+	sudo firewall-cmd --add-service=http --permanent
+	sudo firewall-cmd --reload
+	echo "Enabled Services in the firewall:"
+	sudo firewall-cmd --list-services
 	echo
 }
 
