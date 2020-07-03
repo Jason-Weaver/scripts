@@ -5,15 +5,20 @@ usage() {
 	echo "This was originally written to deploy Wordpress from a CentOS machine"
 }
 
+linuxInstall() {
+	echo "Updating YUM Repo..."
+	sudo yum -y update
+}
+
 # arg parser
 while [ $# -gt 0 ]
 do
 	case "$1" in 
-		--help)
+		--help | -h)
 			usage && exit 0
 			;;
-		-h)
-			usage && exit 0
+		--linux | -l)
+			linuxInstall
 			;;
 		*)
 			echo "Unknown arg" && exit 1
@@ -23,4 +28,3 @@ do
 done
 
 
-echo "Setting up LAMP server..."
